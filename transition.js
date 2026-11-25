@@ -26,6 +26,8 @@
   const white = root.querySelector('.hrx-transition__white');
   const title = root.querySelector('.hrx-transition__title');
   const lines = [...title.querySelectorAll('.hrx-line')];
+  const join = root.querySelector('.hrx-transition__join');
+  let fromScale = 0.3;
   let chars = [], tl = null, live = false, lastW = 0, timer = 0;
 
   // Split each line into characters (kept as plain text until libraries are ready).
@@ -54,6 +56,13 @@
     let fs = 100 * Math.min(w * 0.88, 1500) / widest;
     fs = Math.min(fs, h * 0.3);
     title.style.setProperty('--hrx-fs', fs.toFixed(1) + 'px');
+    if (join) {                          // JOIN must sit comfortably inside the small starting panel
+      join.style.setProperty('--hrx-join-fs', '100px');
+      const jw = join.firstChild ? (() => { const r = document.createRange(); r.selectNodeContents(join); return r.getBoundingClientRect().width; })() : 1;
+      const panelW = w * fromScale, panelH = h * fromScale;
+      const js = Math.min(100 * panelW * 0.72 / (jw || 1), panelH * 0.4);
+      join.style.setProperty('--hrx-join-fs', js.toFixed(1) + 'px');
+    }
   }
 
   function load(src) {
@@ -69,6 +78,7 @@
     ScrollTrigger.config({ ignoreMobileResize: true }); // phone address bar must not re-trigger layout
     const dir = root.dataset.direction === 'bottom' ? 'bottom' : 'center';
     const from = Math.min(0.9, Math.max(0.1, parseFloat(root.dataset.fromScale) || 0.3));
+    fromScale = from;
 
     root.classList.add('is-live');
     split();
@@ -83,6 +93,7 @@
     } else {
       tl.fromTo(white, { scale: from, transformOrigin: '50% 50%' }, { scale: 1, ease: 'power2.inOut', duration: 0.4 }, 0);
     }
+    if (join && dir === 'center') tl.fromTo(join, { opacity: 1, yPercent: 0 }, { opacity: 0, yPercent: -18, ease: 'power1.in', duration: 0.17 }, 0.03);
     tl.fromTo(chars, { yPercent: 112 }, { yPercent: 0, ease: 'power3.out', duration: 0.2, stagger: 0.014 }, 0.3);
     tl.to({}, { duration: Math.max(0.001, 1 - tl.duration()) }); // readable hold, then natural release
     live = true;
@@ -104,7 +115,7 @@
     window.removeEventListener('resize', onResize);
     tl && tl.scrollTrigger && tl.scrollTrigger.kill();
     tl && tl.kill();
-    window.gsap && window.gsap.set([white, ...chars], { clearProps: 'all' });
+    window.gsap && window.gsap.set([white, join, ...chars].filter(Boolean), { clearProps: 'all' });
     root.classList.remove('is-live');
     live = false;
   }

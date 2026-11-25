@@ -173,4 +173,9 @@ dd{font-size:18px;font-weight:700}
   .hrx-transition.is-live .hrx-transition__white,
   .hrx-transition.is-live .hrx-ch{will-change:transform}
 }
+/* JOIN word shown inside the white panel at the start; fades out on scroll */
+.hrx-transition__join{display:none;position:absolute;inset:0;margin:0;place-items:center;pointer-events:none;font-family:var(--display);font-weight:800;font-size:var(--hrx-join-fs,40px);line-height:1;letter-spacing:.02em;text-transform:uppercase;color:var(--hrx-red);white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){
+  .hrx-transition.is-live[data-direction="center"] .hrx-transition__join{display:grid;will-change:transform,opacity}
+}
 @media (min-width:900px){.hrx-transition{--hrx-distance:220svh}}
