@@ -37,8 +37,9 @@ h1,h2,h3,p,dl,dd,ol{margin:0}
 
 /* Hero */
 .hero{padding:36px var(--pad) 44px;display:grid;gap:32px}
+.hero>*{min-width:0}
 .eyebrow{color:var(--lime);font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
-h1{font-family:var(--display);font-weight:800;font-size:clamp(54px,15vw,96px);line-height:.92;text-transform:uppercase;letter-spacing:-.01em}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,13.5vw,96px);line-height:.92;text-transform:uppercase;letter-spacing:-.01em}
 h1 span{color:var(--lime)}
 .hero-lede{margin:20px 0 24px;font-size:18px;color:var(--muted);max-width:34em}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
@@ -140,3 +141,30 @@ dd{font-size:18px;font-weight:700}
 }
 @media(min-width:1500px){body{max-width:1800px;margin:0 auto}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}.js-ready .reveal{opacity:1;transform:none}}
+
+/* ==========================================================
+   HRX scroll transition (scoped: only .hrx-transition)
+   Pure white and red are used ONLY here.
+   Default = static, readable band (no JS / reduced motion).
+   .is-live = scroll-scrubbed pinned version.
+   ========================================================== */
+.hrx-transition{
+  --hrx-white:#FFFFFF; --hrx-red:#D71920;
+  --hrx-distance:170svh;           /* extra scroll while pinned (phones) */
+  --hrx-fs:56px;                   /* set by JS to fit the screen width */
+  position:relative;background:var(--lime)
+}
+.hrx-transition__stage{position:relative;height:70vh;height:70svh;min-height:360px;display:grid;place-items:center;overflow:hidden;background:var(--lime)}
+.hrx-transition__white{position:absolute;inset:-1px;background:var(--hrx-white)}
+.hrx-transition__title{position:relative;margin:0;display:flex;flex-direction:column;align-items:center;font-family:var(--display);font-weight:800;font-size:var(--hrx-fs);line-height:.92;letter-spacing:-.005em;text-transform:uppercase;color:var(--hrx-red);text-align:center}
+.hrx-line{display:block;white-space:nowrap;overflow:hidden;padding:.07em .04em .02em;margin:-.07em -.04em -.02em}
+.hrx-ch{display:inline-block}
+.hrx-sp{display:inline-block;width:.26em}
+
+@media (prefers-reduced-motion:no-preference){
+  .hrx-transition.is-live{height:calc(100vh + var(--hrx-distance));height:calc(100svh + var(--hrx-distance))}
+  .hrx-transition.is-live .hrx-transition__stage{position:sticky;top:0;height:100vh;height:100svh;min-height:0}
+  .hrx-transition.is-live .hrx-transition__white,
+  .hrx-transition.is-live .hrx-ch{will-change:transform}
+}
+@media (min-width:900px){.hrx-transition{--hrx-distance:220svh}}

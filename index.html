@@ -18,6 +18,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=DM+Sans:wght@400;700&display=swap"></noscript>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
+  <script src="transition.js" defer></script>
 
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"HealthClub","name":"HRX Gold Fitness","telephone":"+917488020678","address":{"@type":"PostalAddress","addressLocality":"Mainpura, Patna","addressRegion":"Bihar","addressCountry":"IN"}}
@@ -124,6 +125,14 @@
       </ol>
       <a class="button button-dark" href="https://wa.me/917488020678?text=Hi%20HRX%20Gold%20Fitness%2C%20I%27d%20like%20to%20know%20about%20membership%20options." target="_blank" rel="noopener">Ask about membership on WhatsApp</a>
       <p class="join-note">No online payment. You talk directly with the gym.</p>
+    </section>
+
+    <!-- Scroll-scrubbed transition: only between "How to join" and "Come visit us" -->
+    <section class="hrx-transition" id="hrx-transition" data-hrx-transition data-prev="#join" data-next="#contact" data-direction="center" data-from-scale="0.3">
+      <div class="hrx-transition__stage">
+        <div class="hrx-transition__white" aria-hidden="true"></div>
+        <p class="hrx-transition__title"><span class="hrx-line">HRX</span><span class="hrx-line">Gold Fitness</span></p>
+      </div>
     </section>
 
     <section class="contact section" id="contact">
