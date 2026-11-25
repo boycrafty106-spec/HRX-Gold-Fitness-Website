@@ -19,19 +19,16 @@
   const year = document.getElementById('current-year');
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // The Google map is only loaded when the visitor asks for it.
-  // This keeps the first load fast and saves mobile data.
-  const mapButton = document.getElementById('map-load');
-  const mapFrame = document.getElementById('map-frame');
-  if (mapButton && mapFrame) {
-    mapButton.addEventListener('click', () => {
-      const iframe = document.createElement('iframe');
-      iframe.title = 'Map showing HRX Gold Fitness in Mainpura, Patna';
-      iframe.src = 'https://www.google.com/maps?q=HRX%20Gold%20Fitness%20Mainpura%20Patna&output=embed';
-      iframe.referrerPolicy = 'no-referrer-when-downgrade';
-      iframe.loading = 'lazy';
-      mapFrame.replaceChildren(iframe);
-    });
+  // The map shows by itself: it starts loading just before the visitor scrolls to it,
+  // so it is already visible on arrival without slowing the first load.
+  const mapFrame = document.querySelector('#map-frame iframe[data-src]');
+  if (mapFrame) {
+    const showMap = () => { mapFrame.src = mapFrame.dataset.src; };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries, obs) => {
+        if (entries.some((en) => en.isIntersecting)) { showMap(); obs.disconnect(); }
+      }, { rootMargin: '900px 0px' }).observe(mapFrame);
+    } else showMap();
   }
 
   // Gentle fade-in on scroll (skipped for people who prefer reduced motion)

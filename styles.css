@@ -1,6 +1,6 @@
 /* HRX Gold Fitness – mobile-first, lightweight styles */
 :root{
-  --ink:#101311; --panel:#171c18; --lime:#b7f34a; --white:#f5f5f0;
+  --ink:#101311; --panel:#171c18; --lime:#a9d83f; --white:#f5f5f0;
   --muted:#c0c6bd; --line:rgba(245,245,240,.18);
   --display:'Barlow Condensed','Arial Narrow',Impact,sans-serif;
   --body:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
@@ -70,7 +70,7 @@ h2 span{color:var(--lime)}
 /* Reviews */
 .reviews-grid{display:grid;gap:28px}
 .reviews .button{margin-top:22px}
-.rating-panel{border:1px solid rgba(183,243,74,.5);border-radius:6px;padding:26px;background:var(--panel)}
+.rating-panel{border:1px solid rgba(169,216,63,.5);border-radius:6px;padding:26px;background:var(--panel)}
 .rating-number{font-family:var(--display);font-weight:800;font-size:96px;line-height:.9}
 .rating-number span{font:400 22px var(--body);color:var(--muted);margin-left:6px}
 .rating-stars{color:var(--lime);font-size:24px;letter-spacing:.12em;margin:10px 0 14px}
@@ -96,7 +96,6 @@ dd{font-size:18px;font-weight:700}
 .small{margin:14px 0 20px;font-size:15px;color:var(--muted)}
 .map-frame{height:300px;border-radius:6px;overflow:hidden;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center}
 .map-frame iframe{width:100%;height:100%;border:0}
-.map-load{min-height:52px;padding:0 24px;background:transparent;color:var(--lime);border:2px solid var(--lime);border-radius:4px;font:700 16px var(--body);cursor:pointer}
 
 /* Footer */
 .site-footer{padding:28px var(--pad) 100px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
@@ -104,7 +103,7 @@ dd{font-size:18px;font-weight:700}
 .footer-note{grid-column:1/-1;font-size:13px;color:#a7aea4}
 
 /* Sticky call / WhatsApp bar (phones only) */
-.mobile-action-bar{position:fixed;z-index:30;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px;background:#101311f2;border:1px solid rgba(183,243,74,.4);border-radius:8px}
+.mobile-action-bar{position:fixed;z-index:30;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px;background:#101311f2;border:1px solid rgba(169,216,63,.4);border-radius:8px}
 .mobile-action-bar a{min-height:50px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;border-radius:4px}
 .bar-call{background:#2b322c;color:var(--white)}
 .bar-wa{background:var(--lime);color:var(--ink)}
@@ -123,7 +122,7 @@ dd{font-size:18px;font-weight:700}
   .primary-nav a{padding:0;border:0;font-size:15px}
   .primary-nav a:hover{color:var(--lime)}
   .primary-nav .nav-cta{margin:0;padding:12px 18px}
-  .primary-nav .nav-cta:hover{color:var(--ink);background:#c9ff68}
+  .primary-nav .nav-cta:hover{color:var(--ink);background:#b9e451}
   .hero{grid-template-columns:1.05fr 1fr;align-items:center;gap:56px;padding-top:64px;padding-bottom:72px;min-height:620px}
   .hero-image{aspect-ratio:4/5;max-height:620px}
   .hero-actions .button{flex:0 0 auto}
@@ -152,9 +151,16 @@ dd{font-size:18px;font-weight:700}
   --hrx-white:#FFFFFF; --hrx-red:#D71920;
   --hrx-distance:170svh;           /* extra scroll while pinned (phones) */
   --hrx-fs:56px;                   /* set by JS to fit the screen width */
+  /* ADJUSTABLE BACKGROUND PHOTO (visible around the white panel before it grows) */
+  --hrx-bg-pos:50% 50%;            /* which part of the photo to show, e.g. 30% 40% */
+  --hrx-bg-zoom:1;                 /* 1 = fit, 1.2 = zoom in 20% */
+  --hrx-bg-dim:.5;                 /* darkness over the photo: 0 (none) to 1 (black) */
   position:relative;background:var(--lime)
 }
 .hrx-transition__stage{position:relative;height:70vh;height:70svh;min-height:360px;display:grid;place-items:center;overflow:hidden;background:var(--lime)}
+.hrx-transition__bg{position:absolute;inset:0;overflow:hidden}
+.hrx-transition__bg img{width:100%;height:100%;object-fit:cover;object-position:var(--hrx-bg-pos);transform:scale(var(--hrx-bg-zoom))}
+.hrx-transition__bg:after{content:'';position:absolute;inset:0;background:var(--ink);opacity:var(--hrx-bg-dim)}
 .hrx-transition__white{position:absolute;inset:-1px;background:var(--hrx-white)}
 .hrx-transition__title{position:relative;margin:0;display:flex;flex-direction:column;align-items:center;font-family:var(--display);font-weight:800;font-size:var(--hrx-fs);line-height:.92;letter-spacing:-.005em;text-transform:uppercase;color:var(--hrx-red);text-align:center}
 .hrx-line{display:block;white-space:nowrap;overflow:hidden;padding:.07em .04em .02em;margin:-.07em -.04em -.02em}
